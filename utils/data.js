@@ -1,13 +1,13 @@
 // Define some seed data
 const userData = [
     {
-      username: "John",
+      username: "John123",
       email: "john@gmail.com",
       thoughts: [],
       friends: []
     },
     {
-      username: "Emma",
+      username: "Emma234",
       email: "emma@gmail.com",
       thoughts: [],
       friends: ["John"]
