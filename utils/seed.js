@@ -11,16 +11,8 @@ const { userData, thoughtData } = require('./data');
 // Define a function to clear the existing data
 const clearDatabase = async () => {
   try {
-    const userCollectionExists = await User.exists();
-    const thoughtCollectionExists = await Thought.exists();
-
-    if (userCollectionExists) {
-      await User.collection.drop();
-    }
-
-    if (thoughtCollectionExists) {
-      await Thought.collection.drop();
-    }
+    await User.deleteMany({});
+    await Thought.deleteMany({});
 
     console.log('Database cleared!');
   } catch (err) {
@@ -65,5 +57,8 @@ const seedDatabase = async () => {
   process.exit(0);
 };
 
-// Call the seedDatabase function
-seedDatabase();
+// Call the clearDatabase function
+clearDatabase().then(() => {
+  // Then call the seedDatabase function
+  seedDatabase();
+});

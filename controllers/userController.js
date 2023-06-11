@@ -1,5 +1,7 @@
 // Import the User model
 const User = require('../models/User');
+const Thought = require('../models/Thought');
+
 
 // Define the userController object
 const userController = {
