@@ -44,8 +44,7 @@ const userController = {
   },
 
 /// Method to delete a user by its _id
-// Method to delete a user by its _id
-// Method to delete a user by its _id
+
 async deleteUser({ params }, res) {
   try {
     // Find the user and delete them
