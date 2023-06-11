@@ -31,41 +31,41 @@ const clearDatabase = async () => {
 
 // Define a function to seed the database
 const seedDatabase = async () => {
-  try {
-    // Clear the database
-    await clearDatabase();
+  // Create the User documents without the friends field
+  const userDocuments = await User.create(
+    userData.map(({ friends, ...user }) => user)
+  );
 
-    // Create the User documents without the friends field
-    const userDocuments = await User.create(
-      userData.map(({ friends, ...user }) => user)
+  // Create a map of usernames to _id values
+  const userIds = userDocuments.reduce((map, user) => {
+    map[user.username] = user._id;
+    return map;
+  }, {});
+
+  // Update the friends field of each User document
+  for (let user of userData) {
+    const friendIds = user.friends.map(
+      (friendUsername) => userIds[friendUsername]
     );
-
-    // Create a map of usernames to _id values
-    const userIds = userDocuments.reduce((map, user) => {
-      map[user.username] = user._id;
-      return map;
-    }, {});
-
-    // Update the friends field of each User document
-    for (let user of userData) {
-      const friendIds = user.friends.map(
-        (friendUsername) => userIds[friendUsername]
-      );
-      await User.findByIdAndUpdate(userIds[user.username], {
-        friends: friendIds,
-      });
-    }
-
-    // Create the Thought documents
-    await Thought.create(thoughtData);
-
-    console.log('Database seeded!');
-    process.exit(0);
-  } catch (err) {
-    console.error(err);
-    process.exit(1);
+    await User.findByIdAndUpdate(userIds[user.username], {
+      friends: friendIds,
+    });
   }
+
+  // Create the Thought documents
+  // Add 'userId' field here
+  await Thought.create(
+    thoughtData.map((thought) => ({
+      ...thought,
+      userId: userIds[thought.username],
+    }))
+  );
+
+  console.log('Database seeded!');
+  process.exit(0);
 };
+
+
 
 // Call the seedDatabase function
 seedDatabase();

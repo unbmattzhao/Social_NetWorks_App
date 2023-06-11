@@ -47,14 +47,13 @@ const userController = {
 
 async deleteUser({ params }, res) {
   try {
-    // Find the user and delete them
     const user = await User.findOneAndDelete({ _id: params.id });
     if (!user) {
       return res.status(404).json({ message: 'User not found' });
     }
 
-    // Delete the thoughts associated with the user
-    await Thought.deleteMany({ username: user.username });
+    // Delete the thoughts associated with the user based on the userId field
+    await Thought.deleteMany({ userId: user._id });
 
     res.json({ message: 'User and their Thoughts deleted successfully' });
   } catch (err) {

@@ -17,12 +17,14 @@ const thoughtController = {
   // Method to create a new thought
   async createThought({ body }, res) {
     try {
-      const dbThoughtData = await Thought.create(body);
-      res.json(dbThoughtData);
+      // Add 'userId' field here
+      const newThought = await Thought.create({ ...body, userId: body.userId });
+      res.json(newThought);
     } catch (err) {
       res.status(400).json(err);
     }
-  },
+  }
+  ,
 
   // Method to get a single thought by its _id
   async getThoughtById({ params }, res) {

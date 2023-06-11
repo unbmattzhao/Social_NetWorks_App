@@ -22,6 +22,12 @@ const ThoughtSchema = new Schema(
       ref: 'User',
       required: true
     },
+    // Add this field
+    userId: {
+      type: Schema.Types.ObjectId,
+      ref: 'User',
+      required: true
+    },
     reactions: [ReactionSchema],
   },
   {
@@ -32,6 +38,7 @@ const ThoughtSchema = new Schema(
     id: false,
   }
 );
+
 
 // Create a virtual called reactionCount
 ThoughtSchema.virtual('reactionCount').get(function () {
