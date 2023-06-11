@@ -45,27 +45,19 @@ const userController = {
 
 /// Method to delete a user by its _id
 // Method to delete a user by its _id
+// Method to delete a user by its _id
 async deleteUser({ params }, res) {
   try {
-    // Delete the user and their associated thoughts and reactions
+    // Find the user and delete them
     const user = await User.findOneAndDelete({ _id: params.id });
     if (!user) {
       return res.status(404).json({ message: 'User not found' });
     }
 
     // Delete the thoughts associated with the user
-    const deleteThoughts = await Thought.deleteMany({ username: user.username });
+    await Thought.deleteMany({ username: user.username });
 
-    // Delete the reactions associated with the user
-    const deleteReactions = await Thought.updateMany(
-      { 'reactions.username': user.username },
-      { $pull: { reactions: { username: user.username } } }
-    );
-
-    // Wait for all operations to complete
-    await Promise.all([deleteThoughts, deleteReactions]);
-
-    res.json({ message: 'User and the Thoughts and reactions associated with the user deleted successfully' });
+    res.json({ message: 'User and their Thoughts deleted successfully' });
   } catch (err) {
     res.status(400).json(err);
   }
