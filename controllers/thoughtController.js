@@ -9,6 +9,7 @@ const thoughtController = {
       const dbThoughtData = await Thought.find({});
       res.json(dbThoughtData);
     } catch (err) {
+      console.error(err);
       res.status(400).json(err);
     }
   },

@@ -43,15 +43,30 @@ const userController = {
     }
   },
 
-  // Method to delete a user by its _id
-  async deleteUser({ params }, res) {
-    try {
-      const dbUserData = await User.findOneAndDelete({ _id: params.id });
-      res.json(dbUserData);
-    } catch (err) {
-      res.status(400).json(err);
+// Method to delete a user by its _id
+async deleteUser({ params }, res) {
+  try {
+    // Delete the user and their associated thoughts and reactions
+    const user = await User.findOneAndDelete({ _id: params.id });
+    if (!user) {
+      return res.status(404).json({ message: 'User not found' });
     }
-  },
+
+    // Delete the thoughts associated with the user
+    await Thought.deleteMany({ username: user.username });
+
+    // Delete the reactions associated with the user
+    await Thought.updateMany(
+      { 'reactions.username': user.username },
+      { $pull: { reactions: { username: user.username } } }
+    );
+
+    res.json({ message: 'User deleted successfully' });
+  } catch (err) {
+    res.status(400).json(err);
+  }
+}
+,
 
   // Method to add a new friend to a user's friend list
   async addFriend({ params }, res) {
