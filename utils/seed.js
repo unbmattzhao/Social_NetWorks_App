@@ -65,8 +65,5 @@ const seedDatabase = async () => {
   process.exit(0);
 };
 
-
-
-
 // Call the seedDatabase function
 seedDatabase();
