@@ -44,6 +44,7 @@ const userController = {
   },
 
 /// Method to delete a user by its _id
+// Method to delete a user by its _id
 async deleteUser({ params }, res) {
   try {
     // Delete the user and their associated thoughts and reactions
@@ -53,12 +54,12 @@ async deleteUser({ params }, res) {
     }
 
     // Delete the thoughts associated with the user
-    const deleteThoughts = await Thought.deleteMany({ username: user._id });
+    const deleteThoughts = await Thought.deleteMany({ username: user.username });
 
     // Delete the reactions associated with the user
     const deleteReactions = await Thought.updateMany(
-      { 'reactions.username': user._id },
-      { $pull: { reactions: { username: user._id } } }
+      { 'reactions.username': user.username },
+      { $pull: { reactions: { username: user.username } } }
     );
 
     // Wait for all operations to complete
@@ -68,8 +69,7 @@ async deleteUser({ params }, res) {
   } catch (err) {
     res.status(400).json(err);
   }
-}
-,
+},
 
   // Method to add a new friend to a user's friend list
   async addFriend({ params }, res) {
