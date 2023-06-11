@@ -67,5 +67,6 @@ const seedDatabase = async () => {
 
 
 
+
 // Call the seedDatabase function
 seedDatabase();
