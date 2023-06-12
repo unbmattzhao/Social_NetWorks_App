@@ -19,11 +19,25 @@ const userController = {
   async createUser({ body }, res) {
     try {
       const dbUserData = await User.create(body);
-      res.json(dbUserData);
+
+      // if the user is created, return a message and the user data
+      if (dbUserData) {
+        res.json({
+          message: 'User created successfully',
+          user: dbUserData
+        });
+      } else {
+        throw new Error('User was not created');
+      }
     } catch (err) {
-      res.status(400).json(err);
+      // If the user is not created, return a message `User was not created` and the error
+      res.status(400).json({
+        message: 'User was not created',
+        error: err.message
+      });
     }
-  },
+},
+
 
   // Method to get a single user by its _id
   async getUserById({ params }, res) {
@@ -45,7 +59,7 @@ const userController = {
     }
   },
 
-/// Method to delete a user by its _id
+// Method to delete a user by its _id
 
 async deleteUser({ params }, res) {
   try {
