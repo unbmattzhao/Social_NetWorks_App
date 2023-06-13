@@ -12,7 +12,6 @@ NodeJS-based API social net work app. Built with ExpressJS and MongoDB.
 
 - [Installation](#installation)
 - [Usage](#usage)
-- [Features](#features)
 - [Questions](#questions)
 - [License](#license)
 
@@ -22,12 +21,12 @@ Node version 18.x
 MongoDB
 
 #### Instructions:
-:hammer_and_wrench: Clone or fork this repository.
-:hammer_and_wrench: Navigate to the project directory.
-:hammer_and_wrench: Run `npm install`.
-:hammer_and_wrench: Modify the connection details in the config/connection.js file.
-:hammer_and_wrench: Execute `npm run start` to initiate the server.
-:hammer_and_wrench:Seed Data:
+:hammer_and_wrench: Clone or fork this repository.  
+:hammer_and_wrench: Navigate to the project directory.  
+:hammer_and_wrench: Run `npm install`.  
+:hammer_and_wrench: Modify the connection details in the config/connection.js file.  
+:hammer_and_wrench: Execute `npm run start` to initiate the server.  
+:hammer_and_wrench:Seed Data:  
 Utilize `npm run seed` to populate the database with test data.
 
 
